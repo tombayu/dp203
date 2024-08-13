@@ -1,0 +1,17 @@
+{
+	"name": "Sales Parquet query",
+	"properties": {
+		"content": {
+			"query": "SELECT YEAR(OrderDate) AS OrderYear,\n       COUNT(*) AS OrderedItems\nFROM\n    OPENROWSET(\n        BULK 'https://datalake71ut4ca.dfs.core.windows.net/files/sales/parquet/year=*/',\n        FORMAT = 'PARQUET'\n    ) AS [result]\nWHERE [result].filepath(1) IN ('2019', '2020')\nGROUP BY YEAR(OrderDate)\nORDER BY OrderYear",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
