@@ -1,0 +1,17 @@
+{
+	"name": "4 - Create Sales DB",
+	"properties": {
+		"content": {
+			"query": "-- Database for sales data\nCREATE DATABASE Sales\n  COLLATE Latin1_General_100_BIN2_UTF8;\nGO;\n\nUse Sales;\nGO;\n\n-- External data is in the Files container in the data lake\nCREATE EXTERNAL DATA SOURCE sales_data WITH (\n    LOCATION = 'https://datalakeyvcru7e.dfs.core.windows.net/files/'\n);\nGO;\n\n-- Format for table files\nCREATE EXTERNAL FILE FORMAT ParquetFormat\n    WITH (\n            FORMAT_TYPE = PARQUET,\n            DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n        );\nGO;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Sales",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
