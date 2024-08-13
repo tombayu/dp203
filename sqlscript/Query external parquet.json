@@ -1,0 +1,17 @@
+{
+	"name": "Query external parquet",
+	"properties": {
+		"content": {
+			"query": "SELECT *\nFROM  \n    OPENROWSET(\n        BULK 'parquet/year=*/*.snappy.parquet',\n        DATA_SOURCE = 'sales_data',\n        FORMAT='PARQUET'\n    ) AS orders\nWHERE orders.filepath(1) = '2019'",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "Sales",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
