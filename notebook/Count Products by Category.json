@@ -1,0 +1,88 @@
+{
+	"name": "Count Products by Category",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "spark7scywum",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "dfde7633-6825-4fcc-a575-aeb9b10a7c3e"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/079183a1-142e-40ab-b173-a443d5789cfd/resourceGroups/dp203-7scywum/providers/Microsoft.Synapse/workspaces/synapse7scywum/bigDataPools/spark7scywum",
+				"name": "spark7scywum",
+				"type": "Spark",
+				"endpoint": "https://synapse7scywum.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark7scywum",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.1",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"%%pyspark\n",
+					"df = spark.read.load('abfss://files@datalake7scywum.dfs.core.windows.net/product_data/products.csv', format='csv'\n",
+					"## If header exists uncomment line below\n",
+					", header=True\n",
+					")\n",
+					"display(df.limit(10))"
+				],
+				"execution_count": 2
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"df_counts = df.groupby(df.Category).count()\n",
+					"display(df_counts)"
+				],
+				"execution_count": 3
+			}
+		]
+	}
+}
