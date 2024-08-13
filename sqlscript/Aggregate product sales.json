@@ -1,0 +1,17 @@
+{
+	"name": "Aggregate product sales",
+	"properties": {
+		"content": {
+			"query": "SELECT d.CalendarYear, d.MonthNumberOfYear, d.EnglishMonthName,\n       p.EnglishProductName AS Product, SUM(o.OrderQuantity) AS UnitsSold\nFROM dbo.FactInternetSales AS o\nJOIN dbo.DimDate AS d ON o.OrderDateKey = d.DateKey\nJOIN dbo.DimProduct AS p ON o.ProductKey = p.ProductKey\nGROUP BY d.CalendarYear, d.MonthNumberOfYear, d.EnglishMonthName, p.EnglishProductName\nORDER BY d.MonthNumberOfYear",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sql7scywum",
+				"poolName": "sql7scywum"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
