@@ -39,6 +39,48 @@
 						}
 					},
 					"DeltaFormatInvalidMessages": []
+				},
+				{
+					"Name": "LastName",
+					"Description": "",
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsNullable": true,
+						"IsComplexType": false,
+						"Length": 256,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					},
+					"DeltaFormatInvalidMessages": []
+				},
+				{
+					"Name": "EmailAddress",
+					"Description": "",
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsNullable": false,
+						"IsComplexType": false,
+						"Length": 256,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					},
+					"DeltaFormatInvalidMessages": []
+				},
+				{
+					"Name": "Phone",
+					"Description": "",
+					"OriginDataTypeName": {
+						"TypeName": "string",
+						"IsNullable": true,
+						"IsComplexType": false,
+						"Length": 256,
+						"Properties": {
+							"HIVE_TYPE_STRING": "string"
+						}
+					},
+					"DeltaFormatInvalidMessages": []
 				}
 			],
 			"Format": {
