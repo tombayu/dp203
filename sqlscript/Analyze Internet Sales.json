@@ -1,0 +1,17 @@
+{
+	"name": "Analyze Internet Sales",
+	"properties": {
+		"content": {
+			"query": "SELECT  d.CalendarYear AS Year,\n        pc.EnglishProductCategoryName AS ProductCategory,\n        g.EnglishCountryRegionName AS Region,\n        SUM(i.SalesAmount) AS InternetSalesAmount\nFROM FactInternetSales AS i\nJOIN DimDate AS d ON i.OrderDateKey = d.DateKey\nJOIN DimCustomer AS c ON i.CustomerKey = c.CustomerKey\nJOIN DimGeography AS g ON c.GeographyKey = g.GeographyKey\nJOIN DimProduct AS p ON i.ProductKey = p.ProductKey\nJOIN DimProductSubcategory AS ps ON p.ProductSubcategoryKey = ps.ProductSubcategoryKey\nJOIN DimProductCategory AS pc ON ps.ProductCategoryKey = pc.ProductCategoryKey\nGROUP BY d.CalendarYear, pc.EnglishProductCategoryName, g.EnglishCountryRegionName\nORDER BY Year, ProductCategory, Region;\n\nSELECT  g.EnglishCountryRegionName AS Region,\n        ROW_NUMBER() OVER(PARTITION BY g.EnglishCountryRegionName\n                          ORDER BY i.SalesAmount ASC) AS RowNumber,\n        i.SalesOrderNumber AS OrderNo,\n        i.SalesOrderLineNumber AS LineItem,\n        i.SalesAmount AS SalesAmount,\n        SUM(i.SalesAmount) OVER(PARTITION BY g.EnglishCountryRegionName) AS RegionTotal,\n        AVG(i.SalesAmount) OVER(PARTITION BY g.EnglishCountryRegionName) AS RegionAverage\nFROM FactInternetSales AS i\nJOIN DimDate AS d ON i.OrderDateKey = d.DateKey\nJOIN DimCustomer AS c ON i.CustomerKey = c.CustomerKey\nJOIN DimGeography AS g ON c.GeographyKey = g.GeographyKey\nWHERE d.CalendarYear = 2022\nORDER BY Region;\n\nSELECT d.CalendarYear AS CalendarYear,\n    APPROX_COUNT_DISTINCT(i.SalesOrderNumber) AS Orders\nFROM FactInternetSales AS i\nJOIN DimDate AS d ON i.OrderDateKey = d.DateKey\nGROUP BY d.CalendarYear\nORDER BY CalendarYear;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sql2f6qlgm",
+				"poolName": "sql2f6qlgm"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
